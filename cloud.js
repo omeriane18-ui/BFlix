@@ -10,7 +10,7 @@
    ========================================================= */
 
 const BFLIX_CLOUD = {
-  BIN_ID: "6aaf0a24ffd5d160531a8fc7 ",
+  BIN_ID: "6aaf0a24ffd5d160531a8fc7",
   ROOT: "https://api.jsonbin.io/v3/b",
 };
 
