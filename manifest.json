@@ -1,0 +1,12 @@
+{
+  "name": "BFlix — أفلام ومسلسلات",
+  "short_name": "BFlix",
+  "description": "كتالوج عربي بسيط وسريع للأفلام والمسلسلات",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0b0d10",
+  "theme_color": "#0b0d10",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": []
+}

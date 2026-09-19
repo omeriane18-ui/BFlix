@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>لوحة التحكم — BFlix</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%AC%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html"><span>◆</span> BFlix</a>
+  <nav><a href="index.html">عرض الموقع ↗</a></nav>
+  <div class="actions">
+    <button id="themeBtn" class="icon-btn" aria-label="تبديل المظهر">☼</button>
+    <button class="burger" id="burgerBtn" aria-label="القائمة">☰</button>
+  </div>
+</header>
+<div class="mobile-nav" id="mobileNav"><a href="index.html">عرض الموقع</a></div>
+
+<!-- ============ شاشة الدخول ============ -->
+<main id="loginScreen" class="admin">
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="login-logo">🔒</div>
+      <h1>دخول لوحة التحكم</h1>
+      <p>هذه اللوحة محمية بكلمة مرور محلية بسيطة، مخصّصة لصاحب الموقع فقط.</p>
+      <form id="loginForm">
+        <input id="loginPass" type="password" placeholder="كلمة المرور" required autofocus>
+        <button class="primary" type="submit">دخول</button>
+      </form>
+      <p class="hint" id="loginError"></p>
+      <p class="hint">كلمة المرور الافتراضية: <b>bflix2026</b><br>هذه حماية بسيطة من جهة المتصفح فقط وليست نظام مصادقة حقيقيًا — غيّرها من داخل اللوحة، ولا تعتمد عليها لحماية بيانات حساسة.</p>
+    </div>
+  </div>
+</main>
+
+<!-- ============ لوحة التحكم ============ -->
+<main id="dashboard" class="admin hidden">
+  <div class="admin-title">
+    <div><p class="eyebrow">الإدارة</p><h1>لوحة التحكم</h1><p class="muted">أضف وعدّل محتوى الكتالوج من مكان واحد.</p></div>
+    <div class="form-actions">
+      <button class="secondary" id="logoutBtn">خروج</button>
+      <button class="primary" id="newBtn">+ إضافة عمل</button>
+    </div>
+  </div>
+
+  <div id="cloudStatus" class="cloud-status"></div>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>إعدادات السحابة</h2>
+      <span class="muted">حاوية JSONBin — المصدر الذي يقرأ منه كل الزوّار</span>
+    </div>
+    <div class="form-grid">
+      <label class="wide">مفتاح الكتابة (Access Key أو Master Key)
+        <input id="cloudKey" type="password" placeholder="الصق المفتاح هنا" autocomplete="off">
+      </label>
+    </div>
+    <p class="muted" style="margin:0 0 12px">
+      يُحفظ المفتاح في هذا المتصفح فقط ولا يُرفع إلى GitHub. استخدم Access Key بصلاحيات
+      القراءة والتحديث لهذه الحاوية وحدها بدل Master Key.
+    </p>
+    <div class="form-actions">
+      <button class="primary" id="saveKeyBtn" type="button">حفظ المفتاح</button>
+      <button class="secondary" id="testCloudBtn" type="button">اختبار الاتصال</button>
+      <button class="secondary" id="reloadCloudBtn" type="button">↻ تحديث من السحابة</button>
+      <button class="secondary" id="pushLocalBtn" type="button">⭱ رفع بيانات هذا المتصفح إلى السحابة</button>
+    </div>
+  </section>
+
+  <div class="stats">
+    <div><b id="total">0</b><span>إجمالي الأعمال</span></div>
+    <div><b id="films">0</b><span>أفلام</span></div>
+    <div><b id="shows">0</b><span>مسلسلات</span></div>
+    <div><b id="favCount">0</b><span>في مفضلة الزوّار (هذا الجهاز)</span></div>
+  </div>
+
+  <div class="toolbar">
+    <button class="secondary" id="exportBtn">⭳ تصدير البيانات (JSON)</button>
+    <label class="secondary" style="cursor:pointer">
+      ⭱ استيراد بيانات
+      <input type="file" id="importInput" accept="application/json" class="hidden">
+    </label>
+    <button class="secondary" id="resetBtn">↺ استعادة البيانات التجريبية</button>
+    <button class="secondary" id="changePassBtn">🔑 تغيير كلمة المرور</button>
+  </div>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>المحتوى</h2>
+      <input id="adminSearch" placeholder="بحث بالاسم أو التصنيف...">
+    </div>
+    <div id="adminList"></div>
+  </section>
+
+  <section id="editor" class="panel hidden">
+    <div class="panel-head">
+      <h2 id="editorTitle">إضافة عمل</h2>
+      <button id="closeEditor" class="ghost">إغلاق</button>
+    </div>
+    <form id="itemForm">
+      <input type="hidden" id="itemId">
+      <div class="form-grid">
+        <label>النوع
+          <select id="type">
+            <option value="movie">فيلم</option>
+            <option value="series">مسلسل</option>
+          </select>
+        </label>
+        <label>الاسم<input id="title" required></label>
+        <label>السنة<input id="year" type="number" min="1900" max="2100"></label>
+        <label>التقييم (من 10)<input id="rating" type="number" min="0" max="10" step="0.1"></label>
+        <label class="wide">التصنيفات (افصل بينها بفاصلة)<input id="genre" placeholder="دراما، أكشن..."></label>
+        <label class="wide">رابط الصورة<input id="image" placeholder="https://..."></label>
+        <label class="wide">الوصف<textarea id="description" rows="5"></textarea></label>
+        <label class="wide">رابط المشاهدة الخارجي<input id="watchUrl" type="url" placeholder="رابط منصة/مصدر قانوني"></label>
+        <label><input id="featured" type="checkbox" style="width:auto;display:inline-block;margin-left:8px"> عمل مميّز (يظهر في الواجهة الرئيسية)</label>
+      </div>
+      <div class="form-actions">
+        <button class="primary" type="submit">حفظ</button>
+        <span class="muted">يُحفظ العمل في السحابة ويظهر لكل الزوّار مباشرة.</span>
+      </div>
+    </form>
+  </section>
+</main>
+
+<script src="cloud.js"></script>
+<script src="app.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>BFlix — أفلام ومسلسلات</title>
+  <meta name="description" content="BFlix — كتالوج عربي بسيط وسريع للأفلام والمسلسلات، مع بحث وتصنيفات وتقييمات وقائمة مفضلة.">
+  <meta property="og:title" content="BFlix — أفلام ومسلسلات">
+  <meta property="og:description" content="كتالوج عربي بسيط وسريع للأفلام والمسلسلات.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%AC%3C/text%3E%3C/svg%3E">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html"><span>◆</span> BFlix</a>
+  <nav>
+    <a href="#catalog" data-jump="all">الرئيسية</a>
+    <a href="#catalog" data-jump="movie">الأفلام</a>
+    <a href="#catalog" data-jump="series">المسلسلات</a>
+    <a href="#catalog" data-jump="favorites">المفضلة</a>
+  </nav>
+  <div class="actions">
+    <button id="themeBtn" class="icon-btn" aria-label="تبديل المظهر">☼</button>
+    <a class="admin-link" href="admin.html">لوحة التحكم</a>
+    <button id="burgerBtn" class="burger" aria-label="القائمة">☰</button>
+  </div>
+</header>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#catalog">الرئيسية</a>
+  <a href="#catalog">الأفلام</a>
+  <a href="#catalog">المسلسلات</a>
+  <a href="#catalog">المفضلة</a>
+  <a href="admin.html">لوحة التحكم</a>
+</div>
+
+<main>
+  <section class="hero">
+    <div>
+      <p class="eyebrow">مكتبتك السينمائية</p>
+      <h1>اكتشف ما يستحق<br><span>المشاهدة.</span></h1>
+      <p class="hero-copy">كتالوج بسيط وسريع للأفلام والمسلسلات، مع بحث وتصنيفات وتقييمات وروابط مشاهدة خارجية.</p>
+      <div class="search-wrap"><span>⌕</span><input id="search" placeholder="ابحث عن فيلم أو مسلسل..." autocomplete="off"></div>
+      <div class="hero-stats">
+        <div><b id="statTotal">0</b><span>إجمالي الأعمال</span></div>
+        <div><b id="statMovies">0</b><span>أفلام</span></div>
+        <div><b id="statSeries">0</b><span>مسلسلات</span></div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-poster" id="heroPoster">CINEMA</div>
+      <b id="heroFeaturedName">عمل مميز</b>
+      <small>من اختيارات BFlix هذا الأسبوع</small>
+    </div>
+  </section>
+
+  <section id="catalog" class="section">
+    <div class="section-head">
+      <div><p class="eyebrow">المكتبة</p><h2>تصفّح الأعمال</h2></div>
+      <span id="catalogCount" class="muted"></span>
+    </div>
+
+    <div class="filterbar">
+      <div class="tabs">
+        <button data-type="all" class="active">الكل</button>
+        <button data-type="movie">أفلام</button>
+        <button data-type="series">مسلسلات</button>
+        <button data-type="favorites">♥ المفضلة</button>
+      </div>
+      <div class="sortbox">
+        <select id="sortSelect">
+          <option value="newest">الأحدث إضافة</option>
+          <option value="rating">الأعلى تقييمًا</option>
+          <option value="year">سنة الإصدار</option>
+          <option value="title">أبجديًا</option>
+        </select>
+      </div>
+    </div>
+    <div class="filterbar">
+      <div class="chips" id="genreChips"></div>
+    </div>
+
+    <div id="catalogGrid" class="grid"></div>
+  </section>
+</main>
+
+<footer>
+  <strong>BFlix</strong> — منصة كتالوج أفلام ومسلسلات
+  <br><span>صاحب الموقع: بلال مريان · <a href="mailto:omeriane0@gmail.com">omeriane0@gmail.com</a></span>
+  <div class="footer-links">
+    <a href="admin.html">لوحة التحكم</a>
+    <span>لا تتم استضافة ملفات الفيديو داخل الموقع — روابط المشاهدة خارجية فقط.</span>
+  </div>
+</footer>
+
+<script src="cloud.js"></script>
+<script src="app.js"></script>
+<script>
+  // ربط روابط التبويبات في الهيدر بأزرار الفلترة داخل قسم المكتبة
+  document.querySelectorAll("[data-jump]").forEach(a=>{
+    a.addEventListener("click", (e)=>{
+      const type = a.dataset.jump;
+      const btn = document.querySelector(`.tabs [data-type="${type}"]`);
+      if(btn) btn.click();
+    });
+  });
+</script>
+</body>
+</html>
